@@ -17,7 +17,7 @@ export const changeEnterLoading = data => ({
     data: fromJS(data),
 });
 
-export const getBannerList = () => dispatch => {
+export const getBannerList = dispatch => {
     getBannerRequest().then(res => {
         const { banners } = res;
         dispatch(changeBannerList(banners));

@@ -6,7 +6,7 @@ import Slider from '../../components/slider';
 import RecommendList from '../../components/list';
 import Loading from '../../baseUI/loading';
 import { Content } from './style';
-import * as actionTypes from './store/actionCreators';
+import * as actionCreators from './store/actionCreators';
 
 function Recommend(props) {
 
@@ -24,7 +24,7 @@ function Recommend(props) {
         }
         // eslint-disable-next-line
     }, [])
-
+    // 转换为js数据结构
     const bannerListJS = bannerList ? bannerList.toJS() : [];
     const recommendListJS = recommendList ? recommendList.toJS() : [];
     return (
@@ -51,11 +51,11 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     // 获取轮播图
     getBannerDataDispatch() {
-        dispatch(actionTypes.getBannerList());
+        actionCreators.getBannerList(dispatch);
     },
     // 获取推荐列表
     getRecommendListDataDispatch() {
-        dispatch(actionTypes.getRecommendList());
+        dispatch(actionCreators.getRecommendList());
     },
 });
 

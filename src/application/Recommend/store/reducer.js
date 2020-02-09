@@ -1,5 +1,5 @@
-import * as actionTypes from './constants';
 import { fromJS } from 'immutable';
+import * as actionTypes from './constants';
 
 // fromJS把js数据结构转换为fromJS数据结构
 const defaultState = fromJS({
