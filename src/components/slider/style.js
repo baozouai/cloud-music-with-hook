@@ -11,6 +11,7 @@ export const SliderContainer = styled.div`
     .before {
         position: absolute;
         top: -1000px;
+        /* 这里的高度要比top多100px */
         height: 1100px;
         width: 100%;
         background: ${style['theme-color']};
