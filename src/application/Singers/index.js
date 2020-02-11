@@ -25,11 +25,12 @@ function Singers(props) {
             getHotSingerListDispatch();
 
         }, [])
+    // 渲染歌手列表   
     const renderSingerList = () => {
         return (
             <List>
                 {
-                    singerListJS.map((item, index) => (
+                    singerListJS.map(item => (
                         <ListItem key={item.id}>
                             <div className="img_wrapper">
                                 <img src={item.picUrl} width="100%" height="100%" alt="music" />
@@ -42,8 +43,14 @@ function Singers(props) {
         )
     }
 
-    const handleUpdateCategory = val => setCategory(val);
-    const handleUpdateAlpha = val => setAlpha(val);
+    const handleUpdateCategory = category => {
+        setCategory(category);
+        updateDispatch(category, alpha);
+    };
+    const handleUpdateAlpha = alpha => {
+        setAlpha(alpha);
+        updateDispatch(category, alpha)
+    };
     return (
         <>
             <NavContainer>
@@ -87,8 +94,8 @@ const mapDispatchToProps = dispatch => ({
         dispatch(getSingerList(category, alpha));
     },
     pullUpRefreshDispatch(category, alpha, hot, pageCount) {
-        dispatch(changePageCount(pageCount));
-        dispatch(changeEnterLoading(true));
+        dispatch(changePageCount(pageCount + 1));
+        dispatch(changePullUpLoading(true));
         if (hot) {
             dispatch(getMoreHotSingerList());
         } else {
@@ -99,7 +106,7 @@ const mapDispatchToProps = dispatch => ({
     pullDownRefreshDispatch(category, alpha) {
         // 下拉则页数置0
         dispatch(changePageCount(0));
-        dispatch(changeEnterLoading(true));
+        dispatch(changePullDownLoading(true));
         if (category === '' && alpha === '') {
             dispatch(getHotSingerList())
         } else {
