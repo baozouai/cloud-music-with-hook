@@ -1,7 +1,9 @@
 import React, { useState, useEffect, } from 'react';
 import { connect } from 'react-redux';
+import LazyLoad, { forceCheck } from 'react-lazyload';
 import Horizen from '../../baseUI/horizen-item';
 import Scroll from '../../baseUI/scroll';
+import Loading from '../../baseUI/loading';
 import { categoryTypes, alphaTypes } from '../../api/config';
 import {
     changeEnterLoading,
@@ -20,11 +22,11 @@ function Singers(props) {
     const [alpha, setAlpha] = useState('');
     const { singerList, enterLoading, pageCount, pullUpLoading, pullDownLoading, } = props;
     const { getHotSingerListDispatch, updateDispatch, pullUpRefreshDispatch, pullDownRefreshDispatch, } = props;
-    const singerListJS = singerList? singerList.toJS(): [];
-        useEffect(() => {
-            getHotSingerListDispatch();
+    const singerListJS = singerList ? singerList.toJS() : [];
+    useEffect(() => {
+        getHotSingerListDispatch();
 
-        }, [])
+    }, [])
     // 渲染歌手列表   
     const renderSingerList = () => {
         return (
@@ -33,7 +35,9 @@ function Singers(props) {
                     singerListJS.map(item => (
                         <ListItem key={item.id}>
                             <div className="img_wrapper">
-                                <img src={item.picUrl} width="100%" height="100%" alt="music" />
+                                <LazyLoad placeholder={<img src={require('./singer.png')} height="100%" width="100%" alt="music" />}>
+                                    <img src={`${item.picUrl}?param=300x300`} width="100%" height="100%" alt="music" />
+                                </LazyLoad>
                             </div>
                             <span className="name">{item.name}</span>
                         </ListItem>
@@ -50,6 +54,22 @@ function Singers(props) {
     const handleUpdateAlpha = alpha => {
         setAlpha(alpha);
         updateDispatch(category, alpha)
+    };
+    // 上拉加载
+    const handlePullUp = () => {
+        pullUpRefreshDispatch(category, alpha, category === '', singerListJS.length - 1);
+    }
+    // 下拉加载
+    const handlePullDown = () => {
+        pullDownRefreshDispatch(category, alpha);
+    }
+    // 滑动组件props
+    const scrollProps = {
+        pullUp: handlePullUp,
+        pullDown: handlePullDown,
+        pullUpLoading,
+        pullDownLoading,
+        onScroll: forceCheck,
     };
     return (
         <>
@@ -68,9 +88,10 @@ function Singers(props) {
                 />
             </NavContainer>
             <ListContainer>
-                <Scroll>
+                <Scroll {...scrollProps}>
                     {renderSingerList()}
                 </Scroll>
+                {enterLoading && <Loading />}
             </ListContainer>
         </>
     )

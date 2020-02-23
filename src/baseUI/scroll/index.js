@@ -1,6 +1,9 @@
-import React, { useState, useEffect, useRef, forwardRef, useImperativeHandle, } from 'react';
+import React, { useState, useEffect, useRef, forwardRef, useImperativeHandle, useMemo} from 'react';
 import PropTypes from 'prop-types';
 import BScroll from 'better-scroll';
+import { debounce } from '../../api/utils';
+import Loading from '../loading';
+import Loading2 from '../loading-v2';
 import styled from 'styled-components';
 
 const ScrollContainer = styled.div`
@@ -9,13 +12,42 @@ const ScrollContainer = styled.div`
     overflow: hidden;
 `;
 
+const PullDownLoading = styled.div`
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 5px;
+    width: 60px;
+    height: 60px;
+    margin: auto;
+    z-index: 100;
+`;
+
+const PullUpLoading = styled.div`
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    width: 60px;
+    height: 60px;
+    margin: auto;
+    z-index: 100;
+`;
+
 const Scroll = forwardRef((props, ref) => {
 
     const [bScroll, setBScroll] = useState();
     const scrollContainerRef = useRef();
 
     const { scrollX, scrollY, click, refresh, top, bottom } = props;
-    const { pullUp, pullDown, onScroll } = props;
+    const { pullUp, pullDown, onScroll, pullUpLoading, pullDownLoading, } = props;
+    // 上拉和下拉设置防抖
+    const pullUpDebounce = useMemo(() => {
+        return debounce(pullUp, 300);
+    }, [pullUp]);
+    const pullDownDebounce = useMemo(() => {
+        return debounce(pullDown, 300);
+    }, [pullDown]);
     // 初始化scroll
     useEffect(() => {
         // current 指向初始化 bs 实例需要的 DOM 元素 
@@ -45,7 +77,7 @@ const Scroll = forwardRef((props, ref) => {
         bScroll.on('scrollEnd', () => {
             // 判断是否滑到底部
             if (bScroll.y <= bScroll.maxScrollY + 100) {
-                pullUp();
+                pullUpDebounce();
             }
         });
         return () => bScroll.off('scrollEnd');
@@ -56,7 +88,7 @@ const Scroll = forwardRef((props, ref) => {
         bScroll.on('touchEnd', pos => {
             // 判断用户下拉动作
             if (pos.y > 50) {
-                pullDown();
+                pullDownDebounce();
             }
         });
         return () => bScroll.off('touchEnd');
@@ -78,9 +110,16 @@ const Scroll = forwardRef((props, ref) => {
         }
     }));
 
+    const pullUpDisplayStyle = { display: pullUpLoading ? '' : 'none' };
+    const pullDownDisplayStyle = { display: pullDownLoading ? '' : 'none' };
+
     return (
         <ScrollContainer ref={scrollContainerRef}>
             {props.children}
+            {/* 滑到底部加载动画 */}
+            <PullUpLoading style={pullUpDisplayStyle}><Loading /></PullUpLoading>
+            {/* 顶部下拉加载动画 */}
+            <PullDownLoading style={pullDownDisplayStyle}><Loading2 /></PullDownLoading>
         </ScrollContainer>
     )
 });
