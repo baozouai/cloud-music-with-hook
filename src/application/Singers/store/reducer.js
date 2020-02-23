@@ -24,7 +24,7 @@ export default (state = initialState, action) => {
         case CHANGE_SINGER_LIST:
             return state.set('singerList', action.data);
         case CHANGE_PAGE_COUNT:
-            return state.set('count', action.data);
+            return state.set('pageCount', action.data);
         case CHANGE_ENTER_LOADING:
             return state.set('enterLoading', action.data);
         case CHANGE_PULLUP_LOADING:
