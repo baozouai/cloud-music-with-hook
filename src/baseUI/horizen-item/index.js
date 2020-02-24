@@ -48,4 +48,4 @@ Horizen.propTypes = {
     handleClick: PropTypes.func,
 };
 
-export default React.memo(Horizen);
+export default memo(Horizen);

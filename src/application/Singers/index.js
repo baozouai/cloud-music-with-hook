@@ -1,4 +1,4 @@
-import React, { useState, useEffect, } from 'react';
+import React, { useContext, useEffect, } from 'react';
 import { connect } from 'react-redux';
 import LazyLoad, { forceCheck } from 'react-lazyload';
 import Horizen from '../../baseUI/horizen-item';
@@ -14,18 +14,24 @@ import {
     getMoreHotSingerList,
     getSingerList,
     getMoreSingerList,
+    changeSingerList,
 } from './store/actionCreators';
+import { CategoryDataContext, CHANGE_CATEGORY, CHANGE_ALPHA, } from './data';
 import { NavContainer, ListContainer, List, ListItem } from './style';
 
 function Singers(props) {
-    const [category, setCategory] = useState('');
-    const [alpha, setAlpha] = useState('');
-    const { singerList, enterLoading, pageCount, pullUpLoading, pullDownLoading, } = props;
+    // const [category, setCategory] = useState('');
+    // const [alpha, setAlpha] = useState('');
+    const { data, dispatch } = useContext(CategoryDataContext);
+    const { category, alpha } = data.toJS();
+    const { singerList, enterLoading, pullUpLoading, pullDownLoading, } = props;
     const { getHotSingerListDispatch, updateDispatch, pullUpRefreshDispatch, pullDownRefreshDispatch, } = props;
     const singerListJS = singerList ? singerList.toJS() : [];
     useEffect(() => {
-        getHotSingerListDispatch();
-
+        if (!singerList.size) {
+            getHotSingerListDispatch();
+        }
+        // eslint-disable-next-line
     }, [])
     // 渲染歌手列表   
     const renderSingerList = () => {
@@ -48,11 +54,13 @@ function Singers(props) {
     }
 
     const handleUpdateCategory = category => {
-        setCategory(category);
+        // setCategory(category);
+        dispatch({ type: CHANGE_CATEGORY, data: category });
         updateDispatch(category, alpha);
     };
     const handleUpdateAlpha = alpha => {
-        setAlpha(alpha);
+        // setAlpha(alpha);
+        dispatch({ type: CHANGE_ALPHA, data: alpha });
         updateDispatch(category, alpha)
     };
     // 上拉加载
@@ -110,6 +118,7 @@ const mapDispatchToProps = dispatch => ({
         dispatch(getHotSingerList());
     },
     updateDispatch(category, alpha) {
+        dispatch(changeSingerList([]))
         dispatch(changePageCount(0)); // 改变了分类，使用页数置0
         dispatch(changeEnterLoading(true));
         dispatch(getSingerList(category, alpha));
