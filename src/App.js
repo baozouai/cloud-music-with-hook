@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { renderRoutes } from 'react-router-config';
 import store from './store';
+import Data from './application/Singers/data';
 import routes from './routes';
 import { GlobalStyle } from './style';
 import { IconStyle } from './assets/iconfont/iconfont';
@@ -13,7 +14,9 @@ function App() {
       <Router>
         <GlobalStyle />
         <IconStyle />
-        {renderRoutes(routes)}
+        <Data>
+          {renderRoutes(routes)}
+        </Data>
       </Router>
     </Provider>
   );
