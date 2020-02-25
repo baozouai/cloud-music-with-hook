@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { getRankList } from './store';
 
 function Rank() {
     return (
@@ -6,4 +8,15 @@ function Rank() {
     )
 }
 
-export default React.memo(Rank);
+const mapStateToProps = state => ({
+    rankList: state.getIn(['rank', 'rankList']),
+    loadiing: state.getIn(['rank', 'loading']),
+});
+
+const mapDispatchToProps = dispatch => ({
+    getRankListDataDispatch() {
+        dispatch(getRankList());
+    }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(React.memo(Rank));
