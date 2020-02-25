@@ -8,3 +8,5 @@ export const getRecommendListRequest = () => axiosInstance.get('/personalized');
 export const getHotSingerListRequest = count => axiosInstance.get(`/top/artists?offset=${count}`);
 // 获取歌手列表
 export const getSingerListRequest = (category, alpha, count) => axiosInstance.get(`/artist/list?cat=${category}&initial=${alpha.toLowerCase()}&offset=${count}`);
+// 获取排行榜
+export const getRankListRequest = () => axiosInstance.get('/toplist/detail');
