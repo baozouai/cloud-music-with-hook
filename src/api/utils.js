@@ -20,7 +20,7 @@ const debounce = (func, delay) => {
             clearTimeout(timer);
         }, delay);
     }
-}
+};
 
 export {
     getCount,

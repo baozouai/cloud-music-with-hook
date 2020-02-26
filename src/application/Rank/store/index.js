@@ -6,7 +6,7 @@ const CHANGE_LOADINIG = 'home/rank/CHANGE_LOADINIG';
 
 const changeRankList = data => ({
     type: CHANGE_RANK_LIST,
-    data,
+    data: fromJS(data),
 });
 const changeLoading = data => ({
     type: CHANGE_LOADINIG,
@@ -31,9 +31,9 @@ const defaultState = fromJS({
 const reducer = (state = defaultState, action) => {
     switch (action.type) {
         case CHANGE_RANK_LIST:
-            return state.set('rankList', action.payload);
+            return state.set('rankList', action.data);
         case CHANGE_LOADINIG:
-            return state.set('loading', action.payload);
+            return state.set('loading', action.data);
         default:
             return state;
     }
