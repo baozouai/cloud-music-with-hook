@@ -4,7 +4,6 @@ import { renderRoutes } from 'react-router-config';
 import Scroll from '../../baseUI/scroll';
 import Loading from '../../baseUI/loading';
 import { getRankList } from './store';
-import { findRankListIndex } from '../../api/utils';
 import { Container, List, ListItem, SongList, EnterLoading } from './style';
 
 function Rank(props) {
@@ -62,7 +61,7 @@ function Rank(props) {
                     {renderRankList(officialList)}
                     <h1 className="global" style={displayStyle}>全球版</h1>
                     {renderRankList(globalList, true)}
-                    {loading ? <EnterLoading><loading></loading></EnterLoading> : null}
+                    {loading ? <EnterLoading><Loading></Loading></EnterLoading> : null}
                 </div>
             </Scroll>
             {renderRoutes(props.route.routes)}
