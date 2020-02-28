@@ -44,6 +44,6 @@ export {
     CHANGE_LOADINIG,
     getRankList,
     reducer,
-}
+};
 
 

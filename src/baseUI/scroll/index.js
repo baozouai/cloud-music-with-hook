@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, forwardRef, useImperativeHandle, useMemo} from 'react';
+import React, { useState, useEffect, useRef, forwardRef, useImperativeHandle, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import BScroll from 'better-scroll';
 import { debounce } from '../../api/utils';

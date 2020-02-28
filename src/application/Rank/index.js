@@ -10,6 +10,7 @@ function Rank(props) {
 
     const { rankList: list, loading } = props;
     const { getRankListDataDispatch } = props;
+    console.log(list);
     const rankList = list ? list.toJS() : [];
     // 官方榜单
     const officialList = rankList.filter(item => item.tracks.length);
@@ -18,15 +19,19 @@ function Rank(props) {
     useEffect(() => {
         getRankListDataDispatch();
     }, []);
+
+    const enterDetail = (id) => {
+        props.history.push(`/recommend/${id}`);
+    }
     // 渲染榜单函数 global是区分不同布局
     const renderRankList = (list, global) => {
         return (
-            <List globalRank={global}>
+            list.length ? <List globalRank={global}>
                 {
                     list.map(item => {
                         const { id, tracks, coverImgUrl, updateFrequency } = item;
                         return (
-                            <ListItem key={item.id} tracks={tracks}>
+                            <ListItem key={id} tracks={tracks}>
                                 <div className="img_wrapper">
                                     <img src={coverImgUrl} />
                                     <div className="decorate"></div>
@@ -37,7 +42,7 @@ function Rank(props) {
                         )
                     })
                 }
-            </List>
+            </List>: null
         )
     };
     // 官方版右侧歌曲列表
