@@ -181,11 +181,13 @@ const alphaTypes = [{
     }
   ];
 
+  const HEADER_HEIGHT = 45;
 export {
     baseUrl,
     axiosInstance,
     categoryTypes,
     alphaTypes,
+    HEADER_HEIGHT,
 }
 
 

@@ -10,3 +10,5 @@ export const getHotSingerListRequest = count => axiosInstance.get(`/top/artists?
 export const getSingerListRequest = (category, alpha, count) => axiosInstance.get(`/artist/list?cat=${category}&initial=${alpha.toLowerCase()}&offset=${count}`);
 // 获取排行榜
 export const getRankListRequest = () => axiosInstance.get('/toplist/detail');
+// 获取歌单详情
+export const getAlbumDetailRequest = id => axiosInstance.get(`/playlist/detail?id=${id}`);
