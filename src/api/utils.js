@@ -22,7 +22,13 @@ const debounce = (func, delay) => {
     }
 };
 
+const getName = list => list.map(item => item.name).join('/');
+// 判断对象是否为空
+const isEmptyObj = obj => !obj || Object.keys(obj).length === 0;
+
 export {
     getCount,
     debounce,
+    getName,
+    isEmptyObj,
 }
