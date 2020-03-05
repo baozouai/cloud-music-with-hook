@@ -10,7 +10,6 @@ const HeaderContainer = styled.div`
     width: 100%;
     z-index: 100;
     display: flex;
-    background-color: ${style['theme-color']};
     color: ${style['font-color-light']};
     .back {
         margin-right: 5px;
