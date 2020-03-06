@@ -43,16 +43,16 @@ function Album(props) {
     };
     const handleScroll = useCallback((pos) => {
         const minScrollY = -HEADER_HEIGHT;
-        const percent = Math.abs(pos.y - minScrollY);
+        const percent = Math.abs(pos.y / minScrollY);
         const headerDom = headerEl.current;
         // 划过顶部的高度变化
         if (pos.y < minScrollY) {
-            headerDom.style.backgrounColor = style['theme-color'];
+            headerDom.style.backgroundColor = style['theme-color'];
             headerDom.style.opacity = Math.min(1, (percent - 1) / 2);
             setTitle(currentAlbum.name);
             setIsMarquee(true)
         } else {
-            headerDom.style.backgrounColor = '';
+            headerDom.style.backgroundColor = '';
             headerDom.style.opacity = 1;
             setTitle('歌单');
             setIsMarquee(false);
