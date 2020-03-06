@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, } from 'react';
 import { connect } from 'react-redux';
 import LazyLoad, { forceCheck } from 'react-lazyload';
+import { renderRoutes } from 'react-router-config';
 import Horizen from '../../baseUI/horizen-item';
 import Scroll from '../../baseUI/scroll';
 import Loading from '../../baseUI/loading';
@@ -27,6 +28,7 @@ function Singers(props) {
     const { singerList, enterLoading, pullUpLoading, pullDownLoading, } = props;
     const { getHotSingerListDispatch, updateDispatch, pullUpRefreshDispatch, pullDownRefreshDispatch, } = props;
     const singerListJS = singerList ? singerList.toJS() : [];
+    const enterDetail = id => props.push(`/singers/${id}`);
     useEffect(() => {
         if (!singerList.size) {
             getHotSingerListDispatch();
@@ -39,7 +41,7 @@ function Singers(props) {
             <List>
                 {
                     singerListJS.map(item => (
-                        <ListItem key={item.id}>
+                        <ListItem key={item.id} onClick={() => enterDetail(item.id)}>
                             <div className="img_wrapper">
                                 <LazyLoad placeholder={<img src={require('./singer.png')} height="100%" width="100%" alt="music" />}>
                                     <img src={`${item.picUrl}?param=300x300`} width="100%" height="100%" alt="music" />
@@ -101,6 +103,7 @@ function Singers(props) {
                 </Scroll>
                 {enterLoading && <Loading />}
             </ListContainer>
+            {renderRoutes(props.route.routes)}
         </>
     )
 }
