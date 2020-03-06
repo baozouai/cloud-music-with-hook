@@ -55,7 +55,7 @@ const TopDesc = styled.div`
             right: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba (7, 17, 27, 0.2);
+            background-color: rgba(7, 17, 27, 0.2);
         }
     }
     .img_wrapper {
@@ -68,7 +68,7 @@ const TopDesc = styled.div`
             width: 100%;
             height: 35px;
             border-radius: 3px;
-            background-color: linear-gradient (hsla (0,0%,43%,.4),hsla (0,0%,100%,0));
+            background-color: linear-gradient(hsla (0,0%,43%,.4),hsla (0,0%,100%,0));
         }
         .play_count {
             position: absolute;
