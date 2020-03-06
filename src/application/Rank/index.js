@@ -10,7 +10,6 @@ function Rank(props) {
 
     const { rankList: list, loading } = props;
     const { getRankListDataDispatch } = props;
-    console.log(list);
     const rankList = list ? list.toJS() : [];
     // 官方榜单
     const officialList = rankList.filter(item => item.tracks.length);
@@ -21,7 +20,7 @@ function Rank(props) {
     }, []);
 
     const enterDetail = (id) => {
-        props.history.push(`/recommend/${id}`);
+        props.history.push(`/rank/${id}`);
     }
     // 渲染榜单函数 global是区分不同布局
     const renderRankList = (list, global) => {
@@ -31,7 +30,7 @@ function Rank(props) {
                     list.map(item => {
                         const { id, tracks, coverImgUrl, updateFrequency } = item;
                         return (
-                            <ListItem key={id} tracks={tracks}>
+                            <ListItem key={id} tracks={tracks} onClick={() => enterDetail(id)}>
                                 <div className="img_wrapper">
                                     <img src={coverImgUrl} />
                                     <div className="decorate"></div>
