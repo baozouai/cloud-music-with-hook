@@ -32,15 +32,15 @@ function Album(props) {
         unmountOnExit: true,
         onExited: props.history.goBack,
     };
+    const handleBack = useCallback(() => {
+        setShowStatus(false);
+    }, []);
     const headerProps = {
         ref: headerEl,
         handleClick: handleBack,
         title,
         isMarquee,
     };
-    const handleBack = useCallback(() => {
-        setShowStatus(false);
-    }, []);
     const handleScroll = useCallback((pos) => {
         const minScrollY = -HEADER_HEIGHT;
         const percent = Math.abs(pos.y - minScrollY);
